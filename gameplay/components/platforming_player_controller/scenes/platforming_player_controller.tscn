@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://duquifq6ul7g7"]
+
+[ext_resource type="Script" uid="uid://mwgv4brcnqnc" path="res://gameplay/platforming_player_controller/scripts/platforming_player_controller.gd" id="1_aeoa6"]
+
+[node name="PlatformingPlayerController" type="Node"]
+script = ExtResource("1_aeoa6")
