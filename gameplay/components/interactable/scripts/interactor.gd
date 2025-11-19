@@ -64,7 +64,6 @@ func _process(p_delta: float) -> void:
 ## Interacts with [member target] once. Returns data about the interaction, if any.
 func interact_once() -> Variant:
 	if not is_instance_valid(_target):
-		push_error("Cannot interact with an invalid target.")
 		return
 	
 	var ret: Variant = _target.interact(_interaction_args)
@@ -76,7 +75,6 @@ func interact_once() -> Variant:
 ## [member target] is set to null.
 func start_interaction() -> void:
 	if not is_instance_valid(_target):
-		push_error("Cannot interact with an invalid target.")
 		return
 	
 	_interacting = true
