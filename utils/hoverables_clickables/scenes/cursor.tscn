@@ -4,9 +4,20 @@
 
 [node name="Cursor" type="Node2D"]
 script = ExtResource("1_sj76p")
+hoverable_collision_mask = 1
+clickable_collision_mask = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 
-[node name="WorldRayCast" type="RayCast2D" parent="."]
+[node name="ClickableRayCast" type="RayCast2D" parent="."]
 unique_name_in_owner = true
 target_position = Vector2(-1, -1)
+hit_from_inside = true
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="HoverableRayCast" type="RayCast2D" parent="."]
+unique_name_in_owner = true
+hit_from_inside = true
+collide_with_areas = true
+collide_with_bodies = false

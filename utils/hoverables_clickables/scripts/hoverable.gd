@@ -1,69 +1,62 @@
+@tool
 extends Area2D
 class_name Hoverable
+## A class that allows objects to be "hoverable" by a [Cursor]. 
 
+## Emits when a [Cursor] enters into this [Hoverable].
 signal cursor_entered()
+## Emits when a [Cursor] exits from this [Hoverable], assuming that it had previously entered it.
 signal cursor_exited()
-signal delay_expired()
 
-@export var delay: float:
-	get:
-		return _delay_time
-	set(p_val):
-		_delay_time = p_val
-
+## Sets whether this [Hoverable] is enabled.
 @export var enabled: bool:
 	get = _get_enabled,
 	set = _set_enabled
 
-var _delay_time: float = 1.0
-var _current_time: float
 var _enabled: bool = true
 var _hovered: bool
-var _expired: bool
 
 
 func _enter_tree() -> void:
+	if Engine.is_editor_hint():
+		return
+	
 	mouse_entered.connect(_on_mouse_enter)
 	mouse_exited.connect(_on_mouse_exit)
 
 
-func _process(p_delta: float) -> void:
-	_tick(p_delta)
-
-
-func _tick(p_delta: float) -> void:
-	if not _enabled or not _hovered:
-		return
-	
-	_current_time -= p_delta
-	if _current_time <= 0 and not _expired:
-		_expired = true
-		delay_expired.emit()
-
-
+## Returns if a [Cursor] is currently hovering over this [Hoverable].
 func is_hovered() -> bool:
 	return _hovered
 
 
+## Called to signal that a [Cursor] had entered this [Hoverable]. Mostly used
+## to allow a cursor to interface with this hoverable.
 func enter() -> void:
 	_on_mouse_enter()
 
 
+## Called to signal that a [Cursor] had exited this [Hoverable]. Mostly used
+## to allow a cursor to interface with this hoverable.
 func exit() -> void:
 	_on_mouse_exit()
 
 
 func _on_mouse_enter() -> void:
+	if Engine.is_editor_hint():
+		return
+	
 	if not _enabled or _hovered:
 		return
 	
 	_hovered = true
-	_expired = false
-	_current_time = _delay_time
 	cursor_entered.emit()
 
 
 func _on_mouse_exit() -> void:
+	if Engine.is_editor_hint():
+		return
+	
 	if not _enabled or not _hovered:
 		return
 	
